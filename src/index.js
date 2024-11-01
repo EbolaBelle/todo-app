@@ -17,6 +17,15 @@ class Project {
     }
 }
 
-let item = new Task("Get Job", "You need to get a job", "11/1/2024", "High", "This is a test");
+function pushTaskToProject(project, task) {
+    project.addTask(task);
+}
 
-console.log('Hello, world!')
+function printProject(project) {
+    project.project.forEach(element => {
+        console.log(element);
+    });
+}
+
+let task = new Task("title", 'description', 'due date', "high", "notes")
+let project = new Project;
