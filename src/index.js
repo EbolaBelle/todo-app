@@ -11,12 +11,25 @@ class Task {
 }
 
 class Project {
-    constructor() {
-        this.project = [];
-        projectAggregate.push(this);
+    constructor(name) {
+        this.name = name;
+        this.taskList = [];
+        projectAggregate.push(this);       
     }
     addTask(task) {
-        this.project.push(task);
+        this.taskList.push(task);
+        this.assignIndices();
+    }
+    assignIndices() {
+        let index = 0;
+        this.taskList.forEach(task => {
+            task.index = index;
+            index++;
+        })
+    }
+    removeTask(task) {
+        this.taskList.splice(task.index, 1);
+        this.assignIndices();
     }
 }
 
@@ -25,7 +38,8 @@ function pushTaskToProject(project, task) {
 }
 
 function printProject(project) {
-    project.project.forEach(task => {
+    console.log(project.name);
+    project.taskList.forEach(task => {
         for (const key in task) {
             console.log(`${key}: ${task[key]}`)
         };
@@ -41,7 +55,7 @@ function printAggregate() {
 
 let initialTask = new Task("title", 'description', 'due date', "high", "notes")
 let secondTask = new Task("title2", 'description2', 'due date 2', "low", "notes2")
-let initialProject = new Project;
+let initialProject = new Project("Project #1");
 pushTaskToProject(initialProject, initialTask);
 pushTaskToProject(initialProject, secondTask);
 printAggregate();
