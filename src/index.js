@@ -1,3 +1,5 @@
+const projectAggregate = [];
+
 class Task {
     constructor(title, description, dueDate, priority, notes) {
         this.title = title,
@@ -11,6 +13,7 @@ class Task {
 class Project {
     constructor() {
         this.project = [];
+        projectAggregate.push(this);
     }
     addTask(task) {
         this.project.push(task);
@@ -22,10 +25,23 @@ function pushTaskToProject(project, task) {
 }
 
 function printProject(project) {
-    project.project.forEach(element => {
-        console.log(element);
+    project.project.forEach(task => {
+        for (const key in task) {
+            console.log(`${key}: ${task[key]}`)
+        };
+        console.log(`\n`);
     });
 }
 
-let task = new Task("title", 'description', 'due date', "high", "notes")
-let project = new Project;
+function printAggregate() {
+    projectAggregate.forEach(project => {
+        printProject(project);
+    })
+}
+
+let initialTask = new Task("title", 'description', 'due date', "high", "notes")
+let secondTask = new Task("title2", 'description2', 'due date 2', "low", "notes2")
+let initialProject = new Project;
+pushTaskToProject(initialProject, initialTask);
+pushTaskToProject(initialProject, secondTask);
+printAggregate();
