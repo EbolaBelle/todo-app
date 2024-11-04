@@ -1,12 +1,21 @@
 const projectAggregate = [];
 
 class Task {
-    constructor(title, description, dueDate, priority, notes) {
+    constructor(title, description, due, priority, notes) {
         this.title = title,
         this.description = description,
-        this. dueDate = dueDate,
+        this. due = due,
         this.priority = priority,
         this.notes = notes
+    }
+
+    moveToProject(destinationProject, sourceProject) {
+        destinationProject.addTask(this);
+        if (sourceProject != undefined) {
+        sourceProject.removeTask(this);
+        }
+
+        printAggregate();
     }
 }
 
@@ -38,7 +47,7 @@ class Project {
 }
 
 function printProject(project) {
-    console.log(project.name);
+    console.log(project.name, `\n`, "");
     project.taskList.forEach(task => {
         for (const key in task) {
             if (key === "index") {
@@ -56,9 +65,14 @@ function printAggregate() {
     })
 }
 
+function createNewProject(projectName) {
+    let newProject = new Project(projectName);
+    printAggregate();
+}
+
 let initialTask = new Task("title", 'description', 'due date', "high", "notes")
 let secondTask = new Task("title2", 'description2', 'due date 2', "low", "notes2")
 let initialProject = new Project("Project #1");
-pushTaskToProject(initialProject, initialTask);
-pushTaskToProject(initialProject, secondTask);
+initialProject.addTask(initialTask);
+initialProject.addTask(secondTask);
 printAggregate();
