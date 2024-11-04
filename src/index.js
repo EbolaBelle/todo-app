@@ -1,21 +1,27 @@
 const projectAggregate = [];
 
 class Task {
-    constructor(title, description, due, priority, notes) {
+    constructor(title, description, due, priority, completed, notes) {
         this.title = title,
         this.description = description,
         this. due = due,
         this.priority = priority,
+        this.completed = completed,
         this.notes = notes
     }
 
     moveToProject(destinationProject, sourceProject) {
         destinationProject.addTask(this);
         if (sourceProject != undefined) {
-        sourceProject.removeTask(this);
+            sourceProject.removeTask(this);
         }
-
         printAggregate();
+    }
+
+    toggleCompletion() {
+        this.completed === "n" 
+        ? this.completed = "y"
+        : this.completed =  'n'
     }
 }
 
@@ -70,8 +76,8 @@ function createNewProject(projectName) {
     printAggregate();
 }
 
-let initialTask = new Task("title", 'description', 'due date', "high", "notes")
-let secondTask = new Task("title2", 'description2', 'due date 2', "low", "notes2")
+let initialTask = new Task("title", 'description', 'due date', "high", "n", "notes")
+let secondTask = new Task("title2", 'description2', 'due date 2', "low", "y", "notes2")
 let initialProject = new Project("Project #1");
 initialProject.addTask(initialTask);
 initialProject.addTask(secondTask);
