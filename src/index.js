@@ -14,7 +14,8 @@ class Project {
     constructor(name) {
         this.name = name;
         this.taskList = [];
-        projectAggregate.push(this);       
+        projectAggregate.push(this);
+        this.index = projectAggregate.length - 1;     
     }
     addTask(task) {
         this.taskList.push(task);
@@ -31,19 +32,21 @@ class Project {
         this.taskList.splice(task.index, 1);
         this.assignIndices();
     }
-}
-
-function pushTaskToProject(project, task) {
-    project.addTask(task);
+    deleteSelf() {
+        projectAggregate.splice(this.index, 1);
+    }
 }
 
 function printProject(project) {
     console.log(project.name);
     project.taskList.forEach(task => {
         for (const key in task) {
-            console.log(`${key}: ${task[key]}`)
-        };
-        console.log(`\n`);
+            if (key === "index") {
+                console.log(`\n`);
+            } else {
+                console.log(`${key}: ${task[key]}`)
+            }            
+        };        
     });
 }
 
