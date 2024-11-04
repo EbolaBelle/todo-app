@@ -4,7 +4,7 @@ class Task {
     constructor(title, description, due, priority, completed, notes) {
         this.title = title,
         this.description = description,
-        this. due = due,
+        this.due = due,
         this.priority = priority,
         this.completed = completed,
         this.notes = notes
@@ -22,6 +22,16 @@ class Task {
         this.completed === "n" 
         ? this.completed = "y"
         : this.completed =  'n'
+    }
+
+    changePriority() {
+        if (this.priority === "high") {
+            this.priority = "low"
+        } else if (this.priority === "normal") {
+            this.priority = "high"
+        } else if (this.priority === "low") {
+            this.priority = "normal"
+        }
     }
 }
 
