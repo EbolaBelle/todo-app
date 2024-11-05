@@ -1,13 +1,43 @@
 const projectAggregate = [];
 
+class Project {
+    constructor(name) {
+        this.name = name;
+        this.taskList = [];
+        projectAggregate.push(this);
+        this.index = projectAggregate.length - 1;     
+    }
+    addTask(task) {
+        this.taskList.push(task);
+        this.assignIndices();
+    }
+    assignIndices() {
+        let index = 0;
+        this.taskList.forEach(task => {
+            task.index = index;
+            index++;
+        })
+    }
+    removeTask(task) {
+        this.taskList.splice(task.index, 1);
+        this.assignIndices();
+    }
+    deleteSelf() {
+        projectAggregate.splice(this.index, 1);
+        printAggregate();
+    }
+}
+
+const initialProject = new Project("Default Project");
+
 class Task {
-    constructor(title, description, due, priority, completed, notes) {
+    constructor(title, description, due, priority = "normal", completed = "n", project = initialProject) {
         this.title = title,
         this.description = description,
         this.due = due,
         this.priority = priority,
-        this.completed = completed,
-        this.notes = notes
+        this.completed = completed;
+        project.addTask(this);
     }
 
     moveToProject(destinationProject, sourceProject) {
@@ -35,33 +65,6 @@ class Task {
     }
 }
 
-class Project {
-    constructor(name) {
-        this.name = name;
-        this.taskList = [];
-        projectAggregate.push(this);
-        this.index = projectAggregate.length - 1;     
-    }
-    addTask(task) {
-        this.taskList.push(task);
-        this.assignIndices();
-    }
-    assignIndices() {
-        let index = 0;
-        this.taskList.forEach(task => {
-            task.index = index;
-            index++;
-        })
-    }
-    removeTask(task) {
-        this.taskList.splice(task.index, 1);
-        this.assignIndices();
-    }
-    deleteSelf() {
-        projectAggregate.splice(this.index, 1);
-    }
-}
-
 function printProject(project) {
     console.log(project.name, `\n`, "");
     project.taskList.forEach(task => {
@@ -86,9 +89,19 @@ function createNewProject(projectName) {
     printAggregate();
 }
 
-let initialTask = new Task("title", 'description', 'due date', "high", "n", "notes")
-let secondTask = new Task("title2", 'description2', 'due date 2', "low", "y", "notes2")
-let initialProject = new Project("Project #1");
-initialProject.addTask(initialTask);
-initialProject.addTask(secondTask);
+let initialTask = new Task("title", 'description',  'due date', "high", "n",)
+let secondTask = new Task("title2", 'description2', 'due date 2', "low", "y")
 printAggregate();
+
+const newTaskBtn = document.querySelector('.task');
+const taskDialog = document.querySelector('.task-dialog');
+const submitTaskBtn = document.querySelector('submit');
+const cancelTaskBtn = document.querySelector('.cancel');
+
+newTaskBtn.addEventListener('click', () => {
+    taskDialog.showModal();
+})
+
+cancelTaskBtn.addEventListener('click', () => {
+    taskDialog.close();
+});

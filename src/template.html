@@ -5,7 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body>    
+    <header>
+        <button class="task">Create New Task</button>
+        <button class="project">Create New Project</button>
+    </header>
+    <dialog class="task-dialog">
+        <form>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="2" columns="50"></textarea>
+            <label for="duedate">Due Date:</label>
+            <input type="date" id="duedate" name="duedate">
+            <fieldset>
+                <legend>Priority:</legend>
+                <input type="radio" id="high" name="priority" value="high">
+                <label for="high">High</label>
+                <input type="radio" id="normal" name="priority" value="normal">               
+                <label for="normal">Normal</label>
+                <input type="radio" id="low" name="priority" value="low">
+                <label for="low">Low</label>                
+            </fieldset>
+            <button type="button" class="submit">Submit</button>
+            <button type="button" class="cancel">Cancel</button>
+        </form>
+    </dialog>
     <script src="index.js"></script>
 </body>
 </html>
