@@ -95,7 +95,7 @@ printAggregate();
 
 const newTaskBtn = document.querySelector('.task');
 const taskDialog = document.querySelector('.task-dialog');
-const submitTaskBtn = document.querySelector('submit');
+const submitTaskBtn = document.querySelector('.submit');
 const cancelTaskBtn = document.querySelector('.cancel');
 
 newTaskBtn.addEventListener('click', () => {
@@ -105,3 +105,10 @@ newTaskBtn.addEventListener('click', () => {
 cancelTaskBtn.addEventListener('click', () => {
     taskDialog.close();
 });
+
+submitTaskBtn.addEventListener('click', () => {
+    let newTask = new Task(document.getElementById('title').value, document.getElementById('description').value, document.getElementById('duedate').value, document.querySelector('input[name="priority"]:checked').value)
+    console.log('connekted');
+    printAggregate();
+    taskDialog.close();
+})
