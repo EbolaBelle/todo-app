@@ -4,12 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        header {
+            background-color: blue;
+            height: 10vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+
+        .sidebar {
+            background-color: aqua;
+            height: 90vh;
+            width: 10vw;
+        }
+    </style>
 </head>
 <body>    
     <header>
         <button class="task">Create New Task</button>
         <button class="project">Create New Project</button>
     </header>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="proj-hanger"></div>
+        </div>
+        <div class="body">
+
+        </div>
+    </div>    
     <dialog class="task-dialog">
         <form>
             <label for="title">Title:</label>

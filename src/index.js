@@ -51,7 +51,7 @@ class Task {
     toggleCompletion() {
         this.completed === "n" 
         ? this.completed = "y"
-        : this.completed =  'n'
+        : this.completed = 'n'
     }
 
     changePriority() {
@@ -64,7 +64,7 @@ class Task {
         }
     }
 }
-
+// console only
 function printProject(project) {
     console.log(project.name, `\n`, "");
     project.taskList.forEach(task => {
@@ -77,7 +77,7 @@ function printProject(project) {
         };        
     });
 }
-
+//console only
 function printAggregate() {
     projectAggregate.forEach(project => {
         printProject(project);
@@ -86,17 +86,21 @@ function printAggregate() {
 
 function createNewProject(projectName) {
     let newProject = new Project(projectName);
-    printAggregate();
+    displayProjects();
 }
 
 let initialTask = new Task("title", 'description',  'due date', "high", "n",)
 let secondTask = new Task("title2", 'description2', 'due date 2', "low", "y")
 printAggregate();
 
+/*DOM Manipulation & UI*/
+
 const newTaskBtn = document.querySelector('.task');
+const newProjectBtn = document.querySelector('.project')
 const taskDialog = document.querySelector('.task-dialog');
 const submitTaskBtn = document.querySelector('.submit');
 const cancelTaskBtn = document.querySelector('.cancel');
+const sidebar = document.querySelector('.sidebar');
 
 newTaskBtn.addEventListener('click', () => {
     taskDialog.showModal();
@@ -108,7 +112,18 @@ cancelTaskBtn.addEventListener('click', () => {
 
 submitTaskBtn.addEventListener('click', () => {
     let newTask = new Task(document.getElementById('title').value, document.getElementById('description').value, document.getElementById('duedate').value, document.querySelector('input[name="priority"]:checked').value)
-    console.log('connekted');
     printAggregate();
     taskDialog.close();
 })
+
+function displayProjects() {
+    const hanger = document.querySelector('.proj-hanger');
+    while (hanger.firstChild) {
+        hanger.removeChild(hanger.lastChild);
+    }
+    projectAggregate.forEach((project) => {
+        let proj = document.createElement('button');
+        proj.textContent = project.name;
+        hanger.appendChild(proj);
+    })
+}
