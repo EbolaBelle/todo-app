@@ -1,69 +1,7 @@
-const projectAggregate = [];
+import { projectList, Project, Task, createNewProject, initialProject } from "./todo.js";
+import { userInterface } from './dom.js';
 
-class Project {
-    constructor(name) {
-        this.name = name;
-        this.taskList = [];
-        projectAggregate.push(this);
-        this.index = projectAggregate.length - 1;     
-    }
-    addTask(task) {
-        this.taskList.push(task);
-        this.assignIndices();
-    }
-    assignIndices() {
-        let index = 0;
-        this.taskList.forEach(task => {
-            task.index = index;
-            index++;
-        })
-    }
-    removeTask(task) {
-        this.taskList.splice(task.index, 1);
-        this.assignIndices();
-    }
-    deleteSelf() {
-        projectAggregate.splice(this.index, 1);
-        printAggregate();
-    }
-}
 
-const initialProject = new Project("Default Project");
-
-class Task {
-    constructor(title, description, due, priority = "normal", completed = "n", project = initialProject) {
-        this.title = title,
-        this.description = description,
-        this.due = due,
-        this.priority = priority,
-        this.completed = completed;
-        project.addTask(this);
-    }
-
-    moveToProject(destinationProject, sourceProject) {
-        destinationProject.addTask(this);
-        if (sourceProject != undefined) {
-            sourceProject.removeTask(this);
-        }
-        printAggregate();
-    }
-
-    toggleCompletion() {
-        this.completed === "n" 
-        ? this.completed = "y"
-        : this.completed = 'n'
-    }
-
-    changePriority() {
-        if (this.priority === "high") {
-            this.priority = "low"
-        } else if (this.priority === "normal") {
-            this.priority = "high"
-        } else if (this.priority === "low") {
-            this.priority = "normal"
-        }
-    }
-}
 // console only
 function printProject(project) {
     console.log(project.name, `\n`, "");
@@ -79,51 +17,22 @@ function printProject(project) {
 }
 //console only
 function printAggregate() {
-    projectAggregate.forEach(project => {
+    projectList.forEach(project => {
         printProject(project);
     })
 }
+let projectBox = projectList;
+let projectCreator = createNewProject
 
-function createNewProject(projectName) {
-    let newProject = new Project(projectName);
-    displayProjects();
-}
+const UI = userInterface(projectBox, projectCreator);
 
 let initialTask = new Task("title", 'description',  'due date', "high", "n",)
 let secondTask = new Task("title2", 'description2', 'due date 2', "low", "y")
+let secondProject = new Project('New Project');
 printAggregate();
+
+UI.displayProjects();
+UI.displayTasks(projectList[0]);
 
 /*DOM Manipulation & UI*/
 
-const newTaskBtn = document.querySelector('.task');
-const newProjectBtn = document.querySelector('.project')
-const taskDialog = document.querySelector('.task-dialog');
-const submitTaskBtn = document.querySelector('.submit');
-const cancelTaskBtn = document.querySelector('.cancel');
-const sidebar = document.querySelector('.sidebar');
-
-newTaskBtn.addEventListener('click', () => {
-    taskDialog.showModal();
-})
-
-cancelTaskBtn.addEventListener('click', () => {
-    taskDialog.close();
-});
-
-submitTaskBtn.addEventListener('click', () => {
-    let newTask = new Task(document.getElementById('title').value, document.getElementById('description').value, document.getElementById('duedate').value, document.querySelector('input[name="priority"]:checked').value)
-    printAggregate();
-    taskDialog.close();
-})
-
-function displayProjects() {
-    const hanger = document.querySelector('.proj-hanger');
-    while (hanger.firstChild) {
-        hanger.removeChild(hanger.lastChild);
-    }
-    projectAggregate.forEach((project) => {
-        let proj = document.createElement('button');
-        proj.textContent = project.name;
-        hanger.appendChild(proj);
-    })
-}

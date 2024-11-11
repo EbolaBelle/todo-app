@@ -33,9 +33,7 @@
         <div class="sidebar">
             <div class="proj-hanger"></div>
         </div>
-        <div class="body">
-
-        </div>
+        <div class="body"></div>
     </div>    
     <dialog class="task-dialog">
         <form>
@@ -54,10 +52,18 @@
                 <input type="radio" id="low" name="priority" value="low">
                 <label for="low">Low</label>                
             </fieldset>
-            <button type="button" class="submit">Submit</button>
-            <button type="button" class="cancel">Cancel</button>
+            <button type="button" class="submit-task">Submit</button>
+            <button type="button" class="cancel-task">Cancel</button>
         </form>
     </dialog>
-    <script src="index.js"></script>
+    <dialog class="project-dialog">
+        <form>
+            <label for="name">Project Name:</label>
+            <input type="text" id="name" name="name">
+            <button type="button" class="submit-project">Submit</button>
+            <button type="button" class="cancel-project">Cancel</button>
+        </form>
+    </dialog>
+    <script src="./index.js" type="module"></script>
 </body>
 </html>
