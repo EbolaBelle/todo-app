@@ -24,19 +24,18 @@ class Project {
     }
     deleteSelf() {
         projectList.splice(this.index, 1);
-        printAggregate();
     }
 }
 
 const initialProject = new Project("Default Project");
 
 class Task {
-    constructor(title, description, due, priority = "normal", completed = "n", project = initialProject) {
+    constructor(title, description, due, priority = "normal", project = initialProject) {
         this.title = title,
         this.description = description,
         this.due = due,
         this.priority = priority,
-        this.completed = completed;
+        this.completed = "n";
         project.addTask(this);
     }
 
@@ -45,7 +44,6 @@ class Task {
         if (sourceProject != undefined) {
             sourceProject.removeTask(this);
         }
-        printAggregate();
     }
 
     toggleCompletion() {
@@ -64,10 +62,4 @@ class Task {
         }
     }
 }
-
-function createNewProject(projectName) {
-    let newProject = new Project(projectName);
-    displayProjects();
-}
-
-export { projectList, Project, Task, createNewProject, initialProject };
+export { projectList, Project, Task, initialProject };

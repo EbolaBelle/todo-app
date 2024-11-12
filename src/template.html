@@ -43,6 +43,9 @@
             <textarea id="description" name="description" rows="2" columns="50"></textarea>
             <label for="duedate">Due Date:</label>
             <input type="date" id="duedate" name="duedate">
+            <div class="selector">
+                <label>Project:</label>
+            </div>
             <fieldset>
                 <legend>Priority:</legend>
                 <input type="radio" id="high" name="priority" value="high">
@@ -64,6 +67,6 @@
             <button type="button" class="cancel-project">Cancel</button>
         </form>
     </dialog>
-    <script src="./index.js" type="module"></script>
+    <script src="./index.js" type="module" defer></script>
 </body>
 </html>
