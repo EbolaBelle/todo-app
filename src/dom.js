@@ -37,7 +37,7 @@ function userInterface() {
             projectList[document.getElementById('project').value]
             );
         taskDialog.close();
-        displayTasks(projectList[document.getElementById('project').value]);
+        displayMicroTasks(projectList[document.getElementById('project').value]);
         selector.removeChild(selector.querySelector('select'));
     })
 
@@ -74,7 +74,7 @@ function userInterface() {
         projectList[this.dataset.index2]
             .removeTask(projectList[this.dataset.index2]
             .taskList[this.dataset.index]);
-        displayTasks(projectList[this.dataset.index2]);
+        displayMicroTasks(projectList[this.dataset.index2]);
     }
 
     function deleteProjectAssign() {
@@ -97,7 +97,7 @@ function userInterface() {
 
     function completionToggle() {
         projectList[this.dataset.index2].taskList[this.dataset.index].toggleCompletion();
-        displayTasks(projectList[this.dataset.index2]);
+        displayFullTask(this.dataset.index2, this.dataset.index);
     }
 
     function priorityBtnAssign() {
@@ -109,7 +109,7 @@ function userInterface() {
 
     function priorityToggle() {
         projectList[this.dataset.index2].taskList[this.dataset.index].changePriority();
-        displayTasks(projectList[this.dataset.index2]);
+        displayFullTask(this.dataset.index2, this.dataset.index);
     }
 
     function displayProjects() {
@@ -179,25 +179,37 @@ function userInterface() {
             xpandBtn.dataset.index = task.index;
             xpandBtn.dataset.index2 = project.index;
             taskCard.appendChild(xpandBtn);
+            
             projectCard.appendChild(taskCard);
         })
+        xpandBtnAssign();
     }
 
-    function displayTasks(project) {
+    function xpandBtnAssign() {
+        let xpanders = document.querySelectorAll('.xpand');
+        xpanders.forEach((button) => 
+            button.addEventListener('click', () => {
+                displayFullTask(button.dataset.index2, button.dataset.index)
+            }))
+    }
+
+    function displayFullTask(projectIndex, taskIndex) {
+        let project = projectList[projectIndex];
+        let task = project.taskList[taskIndex];
+        cleanSlate();
+        console.log(projectIndex, taskIndex);
         let projectCard = displayProjectCard(project);
-        project.taskList.forEach(item => {
-            let taskCard = document.createElement('div');
-            taskCard.classList.add('task-card');
-            for (const key in item) {
-                let heading = document.createElement('p');
-                if (key === "index") {
-                    buttonCreator(project, item, taskCard);
-                } else {
-                    heading.textContent = `${key}: ${item[key]}`;
-                } taskCard.appendChild(heading);
-                projectCard.appendChild(taskCard);
-            }
-        })
+        let taskCard = document.createElement('div');
+        taskCard.classList.add('task-card');
+        for (const key in task) {
+            let heading = document.createElement('p');
+            if (key === "index") {
+                buttonCreator(project, task, taskCard)
+            } else {
+                heading.textContent = `${key}: ${task[key]}`;
+            } taskCard.appendChild(heading);
+            projectCard.appendChild(taskCard);
+        }
         buttonAssign();
     }
 
@@ -237,7 +249,7 @@ function userInterface() {
     }
 
     displayProjects();
-    displayTasks(projectList[0]);
+    displayMicroTasks(projectList[0]);
 }
 
 export { userInterface }
