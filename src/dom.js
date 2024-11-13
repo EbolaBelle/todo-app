@@ -11,17 +11,6 @@ function userInterface() {
     const submitProjectBtn = document.querySelector('.submit-project');
     const cancelProjectBtn = document.querySelector('.cancel-project');
 
-    function projectBtnAssign(nodeList) {
-        nodeList.forEach((button) => {
-            button.addEventListener('click', projectHandler);
-        });
-    }
-
-    function projectHandler() {
-        displayTasks(projectList[this.dataset.index]);
-        console.log(this.dataset.index);
-    }
-
     newTaskBtn.addEventListener('click', () => {
         const list = document.createElement('select');
         list.id = "project";
@@ -47,9 +36,9 @@ function userInterface() {
             document.querySelector('input[name="priority"]:checked').value, 
             projectList[document.getElementById('project').value]
             );
-        selector.removeChild(selector.querySelector('select'));
         taskDialog.close();
         displayTasks(projectList[document.getElementById('project').value]);
+        selector.removeChild(selector.querySelector('select'));
     })
 
     newProjectBtn.addEventListener('click', () => projectDialog.showModal())
@@ -62,23 +51,15 @@ function userInterface() {
         displayProjects();
     })
 
-    function displayProjects() {
-        const hanger = document.querySelector('.proj-hanger');
-        while (hanger.firstChild) {
-            hanger.removeChild(hanger.lastChild);
-        }
-        let i = 0;
-        projectList.forEach((project) => {
-            let proj = document.createElement('button');
-            proj.classList.add('project-buttons')
-            proj.setAttribute('type', 'button');
-            proj.dataset.index = i;
-            i++
-            proj.textContent = project.name;
-            hanger.appendChild(proj);
-        })
-        let projectBtns = document.querySelectorAll('.project-buttons');
-        projectBtnAssign(projectBtns);
+    function projectBtnAssign(nodeList) {
+        nodeList.forEach((button) => {
+            button.addEventListener('click', projectHandler);
+        });
+    }
+
+    function projectHandler() {
+        displayTasks(projectList[this.dataset.index]);
+        console.log(this.dataset.index);
     }
 
     function deleteTaskAssign() {
@@ -89,29 +70,21 @@ function userInterface() {
     }
 
     function deleteTaskHandler(){
-        projectList[this.dataset.index2].removeTask(projectList[this.dataset.index2].taskList[this.dataset.index]);
+        projectList[this.dataset.index2]
+            .removeTask(projectList[this.dataset.index2]
+            .taskList[this.dataset.index]);
         displayTasks(projectList[this.dataset.index2]);
     }
 
     function deleteProjectAssign() {
-        document.querySelector('.remove-project').addEventListener('click', deleteProjectHandler);
+        document.querySelector('.remove-project')
+            .addEventListener('click', deleteProjectHandler);
     }
 
     function deleteProjectHandler() {
-        if (projectList.length === 1) {
-            alert('Cannot delete default project');
-        } else {
-            projectList[this.dataset.index].deleteSelf();
+            projectList[this.dataset.index].deleteSelf();            
             displayProjects();
-            cleanSlate();
-        }
-    }
-
-    function cleanSlate() {
-        const body = document.querySelector('.body');
-        while (body.firstChild) {
-            body.removeChild(body.lastChild);
-        }
+            cleanSlate();        
     }
 
     function completionToggleAssign() {
@@ -138,20 +111,61 @@ function userInterface() {
         displayTasks(projectList[this.dataset.index2]);
     }
 
-    function displayTasks(project) {
+    function displayProjects() {
+        const hanger = document.querySelector('.proj-hanger');
+        while (hanger.firstChild) {
+            hanger.removeChild(hanger.lastChild);
+        }
+        let i = 0;
+        projectList.forEach((project) => {
+            let listItem = document.createElement('li');
+            hanger.appendChild(listItem);
+            let proj = document.createElement('button');
+            proj.classList.add('project-buttons')
+            proj.setAttribute('type', 'button');
+            proj.dataset.index = i;
+            i++
+            proj.textContent = project.name;
+            listItem.appendChild(proj);
+        })
+        let projectBtns = document.querySelectorAll('.project-buttons');
+        projectBtnAssign(projectBtns);
+    }
+
+    function displayMicroTasks(project) {
         const body = document.querySelector('.body');
         cleanSlate();
+        createRemoveProjectButton(project);
+    }
+
+    function createRemoveProjectButton(project) {
         let removeProjectBtn = document.createElement("button");
         removeProjectBtn.classList.add('remove-project');
         removeProjectBtn.dataset.index = project.index;
         removeProjectBtn.textContent = "Remove Project";
-        body.appendChild(removeProjectBtn);
-        deleteProjectAssign();
+        return removeProjectBtn;
+    }
+
+    function createProjectCard(project) {
         let projectCard = document.createElement("div");
         let projectTitle = document.createElement('h1');
-        projectTitle.textContent = project.name;    
-        body.appendChild(projectCard);
+        projectTitle.textContent = project.name;
         projectCard.appendChild(projectTitle);
+        return projectCard;
+    }
+
+    function displayProjectCard(project) {
+        const body = document.querySelector('.body');
+        cleanSlate();
+        let removeProjectBtn = createRemoveProjectButton(project);
+        body.appendChild(removeProjectBtn);
+        let projectCard = createProjectCard(project);
+        body.appendChild(projectCard);
+        return projectCard;
+    }
+
+    function displayTasks(project) {
+        let projectCard = displayProjectCard(project);
         project.taskList.forEach(item => {
             let taskCard = document.createElement('div');
             taskCard.classList.add('task-card');
@@ -164,33 +178,47 @@ function userInterface() {
                 } taskCard.appendChild(heading);
                 projectCard.appendChild(taskCard);
             }
-            deleteTaskAssign();
-            completionToggleAssign();
-            priorityBtnAssign();
         })
+        buttonAssign();
     }
-    return { displayProjects };
-}
 
-function buttonCreator(project, item, taskCard) {
-    let priorityBtn = document.createElement('button');
-    priorityBtn.classList.add('priority-button');
-    priorityBtn.dataset.index = item.index;
-    priorityBtn.dataset.index2 = project.index;
-    priorityBtn.textContent = "Toggle Priority";
-    taskCard.appendChild(priorityBtn);
-    let toggleBtn = document.createElement('button');
-    toggleBtn.classList.add('complete-button');
-    toggleBtn.dataset.index = item.index;
-    toggleBtn.dataset.index2 = project.index;
-    toggleBtn.textContent = "Mark Complete";
-    taskCard.appendChild(toggleBtn);
-    let deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-button');
-    deleteBtn.dataset.index = item.index;
-    deleteBtn.dataset.index2 = project.index;
-    deleteBtn.textContent = "Remove Task";
-    taskCard.appendChild(deleteBtn);
+    function buttonAssign() {
+        deleteProjectAssign()
+        deleteTaskAssign();
+        completionToggleAssign();
+        priorityBtnAssign();
+    }
+
+    function buttonCreator(project, item, taskCard) {
+        let priorityBtn = document.createElement('button');
+        priorityBtn.classList.add('priority-button');
+        priorityBtn.dataset.index = item.index;
+        priorityBtn.dataset.index2 = project.index;
+        priorityBtn.textContent = "Toggle Priority";
+        taskCard.appendChild(priorityBtn);
+        let toggleBtn = document.createElement('button');
+        toggleBtn.classList.add('complete-button');
+        toggleBtn.dataset.index = item.index;
+        toggleBtn.dataset.index2 = project.index;
+        toggleBtn.textContent = "Mark Complete";
+        taskCard.appendChild(toggleBtn);
+        let deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-button');
+        deleteBtn.dataset.index = item.index;
+        deleteBtn.dataset.index2 = project.index;
+        deleteBtn.textContent = "Remove Task";
+        taskCard.appendChild(deleteBtn);
+    }
+    
+    function cleanSlate() {
+        const body = document.querySelector('.body');
+        while (body.firstChild) {
+            body.removeChild(body.lastChild);
+        }
+    }
+
+    displayProjects();
+    displayTasks(projectList[0]);
 }
 
 export { userInterface }

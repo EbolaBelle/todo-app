@@ -24,6 +24,9 @@ class Project {
     }
     deleteSelf() {
         projectList.splice(this.index, 1);
+        for (let i = 0; i < projectList.length; i++) { //prevent project index from breaking
+            projectList[i].index = i;
+        }
     }
 }
 
@@ -35,7 +38,7 @@ class Task {
         this.description = description,
         this.due = due,
         this.priority = priority,
-        this.completed = "n";
+        this.completed = "no";
         project.addTask(this);
     }
 
@@ -47,9 +50,9 @@ class Task {
     }
 
     toggleCompletion() {
-        this.completed === "n" 
-        ? this.completed = "y"
-        : this.completed = 'n'
+        this.completed === "no" 
+        ? this.completed = "yes"
+        : this.completed = 'no'
     }
 
     changePriority() {
@@ -62,4 +65,4 @@ class Task {
         }
     }
 }
-export { projectList, Project, Task, initialProject };
+export { projectList, Project, Task };
