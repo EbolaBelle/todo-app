@@ -58,7 +58,8 @@ function userInterface() {
     }
 
     function projectHandler() {
-        displayTasks(projectList[this.dataset.index]);
+        displayMicroTasks(projectList[this.dataset.index]);
+        //displayTasks(projectList[this.dataset.index]);
         console.log(this.dataset.index);
     }
 
@@ -132,12 +133,6 @@ function userInterface() {
         projectBtnAssign(projectBtns);
     }
 
-    function displayMicroTasks(project) {
-        const body = document.querySelector('.body');
-        cleanSlate();
-        createRemoveProjectButton(project);
-    }
-
     function createRemoveProjectButton(project) {
         let removeProjectBtn = document.createElement("button");
         removeProjectBtn.classList.add('remove-project');
@@ -162,6 +157,30 @@ function userInterface() {
         let projectCard = createProjectCard(project);
         body.appendChild(projectCard);
         return projectCard;
+    }
+
+    function displayMicroTasks(project) {
+        const body = document.querySelector('.body');
+        cleanSlate();
+        let projectCard = displayProjectCard(project);
+        project.taskList.forEach(task => {
+            let taskCard = document.createElement('div');
+            taskCard.classList.add('task-card');
+            for (const key in task) {
+                if (key === "title" || key === "due") {
+                    let heading = document.createElement('p');
+                    heading.textContent = `${key}: ${task[key]}`;
+                    taskCard.appendChild(heading);
+                }
+            }
+            let xpandBtn = document.createElement('button');
+            xpandBtn.textContent = "Expand";
+            xpandBtn.classList.add('xpand');
+            xpandBtn.dataset.index = task.index;
+            xpandBtn.dataset.index2 = project.index;
+            taskCard.appendChild(xpandBtn);
+            projectCard.appendChild(taskCard);
+        })
     }
 
     function displayTasks(project) {
