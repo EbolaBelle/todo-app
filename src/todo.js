@@ -41,7 +41,7 @@ class Task {
         this.completed = "no";
         project.addTask(this);
     }
-
+//currently unused
     moveToProject(destinationProject, sourceProject) {
         destinationProject.addTask(this);
         if (sourceProject != undefined) {

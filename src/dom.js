@@ -145,8 +145,10 @@ function userInterface() {
     function createProjectCard(project) {
         let projectCard = document.createElement("div");
         let projectTitle = document.createElement('h1');
+        let body = document.querySelector('.body');
         projectTitle.textContent = project.name;
-        projectCard.appendChild(projectTitle);
+        projectCard.classList.add('project-card');
+        document.querySelector('.body').appendChild(projectTitle);
         return projectCard;
     }
 

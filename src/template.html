@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            color: rgb(255, 186, 8);
+        }
+
         header {
-            background-color: blue;
+            display: flex;
+            background-color: rgb(255, 186, 8);
             height: 10vh;
             display: flex;
-            justify-content: center;
+            justify-content: start;
         }
 
         .wrapper {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
+            display: flex;
         }
 
         .sidebar {
-            background-color: aqua;
+            background-color: rgb(232, 93, 4);
             height: 90vh;
-            width: 10vw;
+            width: min(250px, 25vw);
         }
 
         ul {
@@ -29,13 +38,35 @@
             margin: 0;
         }
 
-        li > button {
+        li>button {
             width: 100%;
             height: 3rem;
         }
+
+        .project-card {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(auto-fit, 200px);
+        }
+
+        .body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(55, 6, 23);
+            height: 90vh;
+            width: 100%;
+        }
+
+        .task-card {
+            background-color: rgb(208, 0, 0);
+            margin: 5px;
+            border: 1px solid black;
+        }
     </style>
 </head>
-<body>    
+
+<body>
     <header>
         <button class="task">Create New Task</button>
         <button class="project">Create New Project</button>
@@ -45,7 +76,7 @@
             <ul class="proj-hanger"></ul>
         </div>
         <div class="body"></div>
-    </div>    
+    </div>
     <dialog class="task-dialog">
         <form id="task-form">
             <label for="title">Title:</label>
@@ -61,10 +92,10 @@
                 <legend>Priority:</legend>
                 <input type="radio" id="high" name="priority" value="high">
                 <label for="high">High</label>
-                <input type="radio" id="normal" name="priority" value="normal">               
+                <input type="radio" id="normal" name="priority" value="normal">
                 <label for="normal">Normal</label>
                 <input type="radio" id="low" name="priority" value="low">
-                <label for="low">Low</label>                
+                <label for="low">Low</label>
             </fieldset>
             <button type="button" class="submit-task">Submit</button>
             <button type="button" class="cancel-task">Cancel</button>
@@ -80,4 +111,5 @@
     </dialog>
     <script src="./index.js" type="module" defer></script>
 </body>
+
 </html>
