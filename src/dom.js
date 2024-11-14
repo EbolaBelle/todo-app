@@ -26,6 +26,7 @@ function userInterface() {
 
     cancelTaskBtn.addEventListener('click', () => {
         taskDialog.close();
+        document.getElementById('task-form').reset();
         selector.removeChild(selector.querySelector('select'));
     });
 
@@ -37,17 +38,22 @@ function userInterface() {
             projectList[document.getElementById('project').value]
             );
         taskDialog.close();
+        document.getElementById('task-form').reset();
         displayMicroTasks(projectList[document.getElementById('project').value]);
         selector.removeChild(selector.querySelector('select'));
     })
 
     newProjectBtn.addEventListener('click', () => projectDialog.showModal())
 
-    cancelProjectBtn.addEventListener('click', () => projectDialog.close())
+    cancelProjectBtn.addEventListener('click', () => {
+        projectDialog.close()
+        document.getElementById('project-form').reset();
+    })
 
     submitProjectBtn.addEventListener('click', () => {
         new Project(document.getElementById('name').value);
         projectDialog.close();
+        document.getElementById('project-form').reset();
         displayProjects();
     })
 
@@ -174,7 +180,6 @@ function userInterface() {
             xpandBtn.dataset.task = task.index;
             xpandBtn.dataset.project = project.index;
             taskCard.appendChild(xpandBtn);
-            
             projectCard.appendChild(taskCard);
         })
         xpandBtnAssign();
