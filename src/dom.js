@@ -170,7 +170,7 @@ function userInterface() {
             let taskCard = document.createElement('div');
             taskCard.classList.add('task-card');
             for (const key in task) {
-                if (key === "title" || key === "due") {
+                if (key === "Title" || key === "Due") {
                     let heading = document.createElement('p');
                     heading.textContent = `${key}: ${task[key]}`;
                     taskCard.appendChild(heading);
@@ -203,13 +203,17 @@ function userInterface() {
         let projectCard = displayProjectCard(project);
         let taskCard = document.createElement('div');
         taskCard.classList.add('task-card');
+        let i = 0;
         for (const key in task) {
             let heading = document.createElement('p');
-            if (key === "index") {
-                buttonCreator(project, task, taskCard)
+            if (key === "project") {
+                buttonCreator(project, task, taskCard);
+                return;
             } else {
                 heading.textContent = `${key}: ${task[key]}`;
-            } taskCard.appendChild(heading);
+                i++;
+            }
+            taskCard.appendChild(heading);
             projectCard.appendChild(taskCard);
         }
         buttonAssign();
@@ -224,30 +228,33 @@ function userInterface() {
     }
 
     function buttonCreator(project, item, taskCard) {
+        let btnBox = document.createElement('div');
+        btnBox.classList.add('button-box');
         let priorityBtn = document.createElement('button');
         priorityBtn.classList.add('priority-button');
         priorityBtn.dataset.task = item.index;
         priorityBtn.dataset.project = project.index;
         priorityBtn.textContent = "Toggle Priority";
-        taskCard.appendChild(priorityBtn);
+        btnBox.appendChild(priorityBtn);
         let toggleBtn = document.createElement('button');
         toggleBtn.classList.add('complete-button');
         toggleBtn.dataset.task = item.index;
         toggleBtn.dataset.project = project.index;
         toggleBtn.textContent = "Mark Complete";
-        taskCard.appendChild(toggleBtn);
+        btnBox.appendChild(toggleBtn);
         let retractBtn = document.createElement('button');
         retractBtn.classList.add('retract-button');
         retractBtn.dataset.task = item.index;
         retractBtn.dataset.project = project.index;
         retractBtn.textContent = "Collapse";
-        taskCard.appendChild(retractBtn);
+        btnBox.appendChild(retractBtn);
         let deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete-button');
         deleteBtn.dataset.task = item.index;
         deleteBtn.dataset.project = project.index;
         deleteBtn.textContent = "Remove Task";
-        taskCard.appendChild(deleteBtn);
+        btnBox.appendChild(deleteBtn);
+        taskCard.appendChild(btnBox);
     }
     
     function cleanSlate() {

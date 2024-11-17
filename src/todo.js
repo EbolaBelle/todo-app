@@ -34,11 +34,12 @@ const initialProject = new Project("Default Project");
 
 class Task {
     constructor(title, description, due, priority = "normal", project = initialProject) {
-        this.title = title,
-        this.description = description,
-        this.due = due,
-        this.priority = priority,
-        this.completed = "no";
+        this.Title = title,
+        this.Description = description,
+        this.Due = due,
+        this.Priority = priority,
+        this.Completed = "No";
+        this.project = project.index;
         project.addTask(this);
     }
 //currently unused
@@ -50,18 +51,18 @@ class Task {
     }
 
     toggleCompletion() {
-        this.completed === "no" 
-        ? this.completed = "yes"
-        : this.completed = 'no'
+        this.Completed === "No" 
+        ? this.Completed = "Yes"
+        : this.Completed = 'No'
     }
 
     changePriority() {
-        if (this.priority === "high") {
-            this.priority = "low"
-        } else if (this.priority === "normal") {
-            this.priority = "high"
-        } else if (this.priority === "low") {
-            this.priority = "normal"
+        if (this.Priority === "High") {
+            this.Priority = "Low"
+        } else if (this.Priority === "Normal") {
+            this.Priority = "High"
+        } else if (this.Priority === "Low") {
+            this.Priority = "Normal"
         }
     }
 }

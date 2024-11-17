@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
         }
@@ -61,7 +65,14 @@
         .task-card {
             background-color: rgb(208, 0, 0);
             margin: 5px;
+            padding: 20px;
             border: 1px solid black;
+            border-radius: 25%;
+            width: fit-content;
+        }
+        
+        .button-box {
+            display: flex;
         }
     </style>
 </head>
@@ -90,11 +101,11 @@
             </div>
             <fieldset>
                 <legend>Priority:</legend>
-                <input type="radio" id="high" name="priority" value="high">
+                <input type="radio" id="high" name="priority" value="High">
                 <label for="high">High</label>
-                <input type="radio" id="normal" name="priority" value="normal">
+                <input type="radio" id="normal" name="priority" value="Normal">
                 <label for="normal">Normal</label>
-                <input type="radio" id="low" name="priority" value="low">
+                <input type="radio" id="low" name="priority" value="Low">
                 <label for="low">Low</label>
             </fieldset>
             <button type="button" class="submit-task">Submit</button>
