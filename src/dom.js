@@ -1,5 +1,5 @@
 import { projectList, Project, Task } from "./todo.js";
-import {populateStorage} from "./storage.js";
+import {populateStorage, retrieveStorage} from "./storage.js";
 
 function userInterface() {
     const newTaskBtn = document.querySelector('.task');
@@ -89,6 +89,7 @@ function userInterface() {
     function deleteProjectHandler() {
             projectList[this.dataset.project].deleteSelf();            
             displayProjects();
+            populateStorage();
             cleanSlate();
     }
 
@@ -199,7 +200,7 @@ function userInterface() {
                 displayFullTask(button.dataset.project, button.dataset.task)
             }))
     }
-    //BUG - issues with button assignment
+    
     function displayFullTask(projectIndex, taskIndex) {
         let project = projectList[projectIndex];
         let task = project.taskList[taskIndex];
@@ -267,7 +268,7 @@ function userInterface() {
             body.removeChild(body.lastChild);
         }
     }
-
+    retrieveStorage();
     displayProjects();
     displayMicroTasks(projectList[0]);
 }

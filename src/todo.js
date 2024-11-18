@@ -30,7 +30,7 @@ class Project {
     }
 }
 
-const initialProject = new Project("Default Project");
+//const initialProject = new Project("Default Project");
 
 class Task {
     constructor(title, description, due, priority = "normal", project = initialProject) {
