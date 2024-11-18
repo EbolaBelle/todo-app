@@ -1,4 +1,5 @@
 import { projectList, Project, Task } from "./todo.js";
+import {populateStorage} from "./storage.js";
 
 function userInterface() {
     const newTaskBtn = document.querySelector('.task');
@@ -37,6 +38,7 @@ function userInterface() {
             document.querySelector('input[name="priority"]:checked').value, 
             projectList[document.getElementById('project').value]
             );
+        populateStorage(); //NEW
         taskDialog.close();
         document.getElementById('task-form').reset();
         displayMicroTasks(projectList[document.getElementById('project').value]);
@@ -54,6 +56,7 @@ function userInterface() {
         new Project(document.getElementById('name').value);
         projectDialog.close();
         document.getElementById('project-form').reset();
+        populateStorage();
         displayProjects();
     })
 
@@ -76,6 +79,7 @@ function userInterface() {
             .removeTask(projectList[this.dataset.project]
             .taskList[this.dataset.task]);
         displayMicroTasks(projectList[this.dataset.project]);
+        populateStorage();
     }
 
     function deleteProjectAssign() {
@@ -105,6 +109,7 @@ function userInterface() {
     function priorityToggle() {
         projectList[this.dataset.project].taskList[this.dataset.task].changePriority();
         displayFullTask(this.dataset.project, this.dataset.task);
+        console.log(`${this.dataset.project}, ${this.dataset.task}`);
     }
 
     function collapseAssign() {
@@ -195,7 +200,7 @@ function userInterface() {
                 displayFullTask(button.dataset.project, button.dataset.task)
             }))
     }
-
+    //BUG - issues with button assignment
     function displayFullTask(projectIndex, taskIndex) {
         let project = projectList[projectIndex];
         let task = project.taskList[taskIndex];
@@ -208,6 +213,7 @@ function userInterface() {
             let heading = document.createElement('p');
             if (key === "project") {
                 buttonCreator(project, task, taskCard);
+                buttonAssign();
                 return;
             } else {
                 heading.textContent = `${key}: ${task[key]}`;
@@ -216,7 +222,6 @@ function userInterface() {
             taskCard.appendChild(heading);
             projectCard.appendChild(taskCard);
         }
-        buttonAssign();
     }
 
     function buttonAssign() {
