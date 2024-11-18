@@ -109,7 +109,6 @@ function userInterface() {
     function priorityToggle() {
         projectList[this.dataset.project].taskList[this.dataset.task].changePriority();
         displayFullTask(this.dataset.project, this.dataset.task);
-        console.log(`${this.dataset.project}, ${this.dataset.task}`);
     }
 
     function collapseAssign() {
@@ -213,8 +212,7 @@ function userInterface() {
             let heading = document.createElement('p');
             if (key === "project") {
                 buttonCreator(project, task, taskCard);
-                buttonAssign();
-                return;
+                break;
             } else {
                 heading.textContent = `${key}: ${task[key]}`;
                 i++;
@@ -222,6 +220,7 @@ function userInterface() {
             taskCard.appendChild(heading);
             projectCard.appendChild(taskCard);
         }
+        buttonAssign();
     }
 
     function buttonAssign() {

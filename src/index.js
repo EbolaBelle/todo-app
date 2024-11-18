@@ -1,5 +1,6 @@
 import { Project, Task, projectList } from "./todo.js";
 import { userInterface } from './dom.js';
+import { populateStorage } from "./storage.js";
 
 let initialTask = new Task("title", 'description',  'due date', "High")
 let secondTask = new Task("title2", 'description2', 'due date 2', "Low")
@@ -9,7 +10,7 @@ const UI = userInterface();
 
 //print();
 
-//populateStorage();
+populateStorage();
 
 function print() {
     console.log(projectList[0].taskList);
