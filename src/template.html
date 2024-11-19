@@ -1,126 +1,178 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+      * {
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
 
-        body {
-            margin: 0;
-        }
+      button {
+        font-family: "Open Sans", sans-serif;
+        font-size: 16px;
+        letter-spacing: 2px;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #000;
+        cursor: pointer;
+        border: 3px solid;
+        padding: 0.25em 0.5em;
+        box-shadow:
+          1px 1px 0px 0px,
+          2px 2px 0px 0px,
+          3px 3px 0px 0px,
+          4px 4px 0px 0px,
+          5px 5px 0px 0px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
 
-        h1 {
-            color: rgb(255, 186, 8);
-        }
+      button:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+      }
 
-        header {
-            display: flex;
-            background-color: rgb(255, 186, 8);
-            height: 10vh;
-            display: flex;
-            justify-content: start;
+      @media (min-width: 768px) {
+        button {
+          padding: 0.25em 0.75em;
         }
+      }
 
-        .wrapper {
-            display: flex;
-        }
+      body {
+        margin: 0;
+      }
 
-        .sidebar {
-            background-color: rgb(232, 93, 4);
-            height: 90vh;
-            width: min(250px, 25vw);
-        }
+      .project-title {
+        color: rgb(255, 186, 8);
+      }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+      header {
+        display: flex;
+        background-color: rgb(255, 186, 8);
+        height: 10vh;
+        display: flex;
+        justify-content: space-between;
+      }
 
-        li>button {
-            width: 100%;
-            height: 3rem;
-        }
+      .wrapper {
+        display: flex;
+      }
 
-        .project-card {
-            display: grid;
-            width: 100%;
-            grid-template-columns: repeat(auto-fit, 200px);
-        }
+      .sidebar {
+        background-color: rgb(232, 93, 4);
+        height: 90vh;
+        width: min(250px, 25vw);
+      }
 
-        .body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: rgb(55, 6, 23);
-            height: 90vh;
-            width: 100%;
-        }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
 
-        .task-card {
-            background-color: rgb(208, 0, 0);
-            margin: 5px;
-            padding: 20px;
-            border: 1px solid black;
-            border-radius: 25%;
-            width: fit-content;
-        }
+      li > button {
+        width: 100%;
+        height: 3rem;
+      }
+
+      .project-card {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(auto-fit, 200px);
+        justify-content: center;
+      }
+
+      .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(55, 6, 23);
+        height: 90vh;
+        width: 100%;
+      }
+
+      .task-title {
+        justify-self: center;
+      }
+
+      .task-card {
+        background-color: rgb(208, 0, 0);
+        margin: 5px;
+        padding: 20px;
+        border: 1px solid black;
+        border-radius: 25%;
         
-        .button-box {
-            display: flex;
-        }
-    </style>
-</head>
+        justify-self: center;
+      }
 
-<body>
+      .task-card:hover {
+        box-shadow: 3px 3px 1px 2px black;
+        transform: translateZ(100px);
+      }
+
+      .micro {
+        width: 250px;
+      }
+
+      .button-box {
+        display: flex;
+      }
+    </style>
+  </head>
+
+  <body>
     <header>
-        <button class="task">Create New Task</button>
-        <button class="project">Create New Project</button>
+      <button class="project">Create New Project</button>
+      <button class="task">Create New Task</button>
     </header>
     <div class="wrapper">
-        <div class="sidebar">
-            <ul class="proj-hanger"></ul>
-        </div>
-        <div class="body"></div>
+      <div class="sidebar">
+        <ul class="proj-hanger"></ul>
+      </div>
+      <div class="body"></div>
     </div>
     <dialog class="task-dialog">
-        <form id="task-form">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="2" columns="50"></textarea>
-            <label for="duedate">Due Date:</label>
-            <input type="date" id="duedate" name="duedate">
-            <div class="selector">
-                <label>Project:</label>
-            </div>
-            <fieldset>
-                <legend>Priority:</legend>
-                <input type="radio" id="high" name="priority" value="High">
-                <label for="high">High</label>
-                <input type="radio" id="normal" name="priority" value="Normal">
-                <label for="normal">Normal</label>
-                <input type="radio" id="low" name="priority" value="Low">
-                <label for="low">Low</label>
-            </fieldset>
-            <button type="button" class="submit-task">Submit</button>
-            <button type="button" class="cancel-task">Cancel</button>
-        </form>
+      <form id="task-form">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" />
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="2"
+          columns="50"
+        ></textarea>
+        <label for="duedate">Due Date:</label>
+        <input type="date" id="duedate" name="duedate" />
+        <div class="selector">
+          <label>Project:</label>
+        </div>
+        <fieldset>
+          <legend>Priority:</legend>
+          <input type="radio" id="high" name="priority" value="High" />
+          <label for="high">High</label>
+          <input type="radio" id="normal" name="priority" value="Normal" />
+          <label for="normal">Normal</label>
+          <input type="radio" id="low" name="priority" value="Low" />
+          <label for="low">Low</label>
+        </fieldset>
+        <button type="button" class="submit-task">Submit</button>
+        <button type="button" class="cancel-task">Cancel</button>
+      </form>
     </dialog>
     <dialog class="project-dialog">
-        <form id="project-form">
-            <label for="name">Project Name:</label>
-            <input type="text" id="name" name="name">
-            <button type="button" class="submit-project">Submit</button>
-            <button type="button" class="cancel-project">Cancel</button>
-        </form>
+      <form id="project-form">
+        <label for="name">Project Name:</label>
+        <input type="text" id="name" name="name" />
+        <button type="button" class="submit-project">Submit</button>
+        <button type="button" class="cancel-project">Cancel</button>
+      </form>
     </dialog>
     <script src="./index.js" type="module" defer></script>
-</body>
-
+  </body>
 </html>
